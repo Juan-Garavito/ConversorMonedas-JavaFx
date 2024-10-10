@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.conversormonedas.HistorialController"
+stylesheets="@styles.css">
+    <padding>
+        <Insets left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <TableView fx:id="tablaHistorial" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0">
+        <columns>
+            <TableColumn fx:id="columnaFecha" text="Fecha"/>
+            <TableColumn fx:id="columnaMonedaConvertir" text="Moneda a Convertir"/>
+            <TableColumn fx:id="columnaValorConvertir" text="Valor a Convertir"/>
+            <TableColumn fx:id="columnaMonedaConvertida" text="Moneda Convertida"/>
+            <TableColumn fx:id="columnaValorConversion" text="Valor Convertido"/>
+        </columns>
+    </TableView>
+    <HBox alignment="center">
+        <Button fx:id="btnCambiarEscena" onAction="#cambiarAEscena">Volver al convertor</Button>
+        <HBox.margin>
+            <Insets top="20.0"/>
+        </HBox.margin>
+    </HBox>
+</VBox>

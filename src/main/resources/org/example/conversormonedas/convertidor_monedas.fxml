@@ -7,7 +7,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.text.Text?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.layout.HBox?>
+<VBox alignment="CENTER" spacing="40.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.conversormonedas.ConversorMonedasController"
       stylesheets="@styles.css">
   <padding>
@@ -19,6 +20,9 @@
   <TextField fx:id="cantidad_to_convert">5.14</TextField>
   <Label text="Moneda a convetir:" />
   <ComboBox fx:id="convert_codes_monedas"/>
-  <Button fx:id="btnConvert" onAction="#convertirMonedas">Convertir Moneda</Button>
+  <HBox  spacing="15" alignment="CENTER">
+    <Button fx:id="btnConvert" onAction="#convertirMonedas">Convertir Moneda</Button>
+    <Button fx:id="btnCambiarEscena" onAction="#cambiarAEscena">Ver Historial</Button>
+  </HBox>
   <Text fx:id="cantidad_convert"/>
 </VBox>

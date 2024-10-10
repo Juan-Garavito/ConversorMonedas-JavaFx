@@ -33,4 +33,5 @@
 .button {
     -fx-text-fill: #333;
     -fx-font-size: 14px;
+    -fx-padding: 15px;
 }

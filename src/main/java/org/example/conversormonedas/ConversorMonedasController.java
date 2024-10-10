@@ -5,14 +5,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.example.conversormonedas.Clases.Codes;
-import org.example.conversormonedas.Clases.Conversion;
-import org.example.conversormonedas.Clases.ConvertidorMonedas;
+import javafx.stage.Stage;
+import org.example.conversormonedas.Clases.*;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ConversorMonedasController {
@@ -38,7 +42,7 @@ public class ConversorMonedasController {
         ObservableList<String> valoresComboBox = FXCollections.observableArrayList();
 
         for (int i = 0; i < keyCodes.size(); i++) {
-            valoresComboBox.add(keyCodes.get(i)+  " - " + valuesCodes.get(i));
+            valoresComboBox.add(keyCodes.get(i) + " - " + valuesCodes.get(i));
         }
 
         select_codes_monedas.setItems(valoresComboBox);
@@ -54,22 +58,24 @@ public class ConversorMonedasController {
     @FXML
     public void convertirMonedas() {
 
-        try{
+        try {
             String selectMoneda = select_codes_monedas.getValue().substring(0, 3);
             String convertMoneda = convert_codes_monedas.getValue().substring(0, 3);
             Float cantidadToConvert = Float.valueOf(cantidad_to_convert.getText());
-            Conversion conversion = convertidorMonedas.convetirMoneda(selectMoneda,convertMoneda, cantidadToConvert);
+            Conversion conversion = convertidorMonedas.convetirMoneda(selectMoneda, convertMoneda, cantidadToConvert);
             cantidad_convert.setText(STR."El valor en \{convertMoneda} es --> \{conversion.getValorConversion()}");
-        }catch (NumberFormatException e){
+            Historial historial = new Historial(LocalDate.now(), select_codes_monedas.getValue(), cantidadToConvert.floatValue(), convert_codes_monedas.getValue(), conversion.getValorConversion());
+            añadirHistorial(historial);
+        } catch (NumberFormatException e) {
             cantidad_convert.setText("Debes poner solo un valor numerico");
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e);
             cantidad_convert.setText("Ha ocurrido un error. Vuelvelo a intentar.");
         }
 
     }
 
-
-    public void configurarComboBox(List<String> valoresComboBox, ComboBox<String> comboBox){
+    public void configurarComboBox(List<String> valoresComboBox, ComboBox<String> comboBox) {
         ObservableList<String> items = FXCollections.observableArrayList(valoresComboBox);
         comboBox.setItems(items);
         comboBox.setEditable(true);
@@ -97,6 +103,23 @@ public class ConversorMonedasController {
             }
 
         });
+
+    }
+
+    public void añadirHistorial(Historial historial) {
+        ListHistorial listHistorial = new ListHistorial();
+        listHistorial.añadirHistorial(historial);
+    }
+
+    @FXML
+    public void cambiarAEscena() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("historial.fxml"));
+
+        Stage stage = (Stage) cantidad_convert.getParent().getScene().getWindow();
+        Scene scene = new Scene(root, 700, 550);
+        stage.setTitle("Historial");
+        stage.setScene(scene);
+        stage.show();
 
     }
 }
